@@ -1,0 +1,67 @@
+﻿@model FormModel
+@{
+    ViewData["Title"] = "Form";
+}
+<div class="container bg-light">
+    <form asp-action="FormAction" asp-controller="Form" id="submitForm">
+        <div class="row">
+
+            <div class="col-10">
+                <label>Surname</label>
+                <input id="surname" type="text" asp-for="surname" placeholder="enter surname" value="" />
+            </div>
+            <div class="col-10">
+                <label>Name</label>
+                <input id="name" type="text" asp-for="name" placeholder="enter name" value="" />
+            </div>
+            <div class="col-10">
+                <label>Age</label>
+                <input id="age" type="number" asp-for="age" placeholder="enter age" value="" />
+            </div>
+
+        </div>
+        <button class="btn-danger" id="submitBtn" type="submit">Submit data</button>
+    </form>
+</div>
+<script src="~/lib/jquery/jquery.js"></script>
+<button id="addToCartButton">Purchase</button>
+<script type="text/javascript">
+    $('#submitForm').submit(function () {
+        var surname = $('#surname').val();
+        var name = $('#name').val();
+        var age = $('#age').val();
+        fbq('track', 'Test', { surname: surname, name: name, age: age, test_event_code: TEST15281 });
+    });
+
+    $("#addToCartButton").click(function () {
+        $.post("https://graph.facebook.com/{API_VERSION}/{PIXEL_ID}/events?access_token={EAAMDfPOxYZBwBAPn8CvHzcDpSWLwkKXSRDfpQMWugCp3Af8gZA0Rl9hyibIjOMuJZBawWT7UO5EXLC6IdNK1sPFtNE1SJFl3SgQAhhjLxUIMjTfZAqKUqiNsDzqf5TSi6utJ30F6GykyK0ZBHmlYfuX4XqPi09C6i0LBCwJMUeC9utWsYVVASFC2ZAkmKkxWkZD}",
+            
+               {
+                "data": [
+                    {
+                        "event_name": "Purchase",
+                        "event_time": 1662735180,
+                        "action_source": "email",
+                        "user_data": {
+                            "em": [
+                                "7b17fb0bd173f625b58636fb796407c22b3d16fc78302d79f0fd30c2fc2fc068"
+                            ],
+                            "ph": [
+                                null
+                            ]
+                        },
+                        "custom_data": {
+                            "currency": "USD",
+                            "value": "142.52"
+                        }
+                    }
+                ]
+            
+            },
+            function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+    });
+</script>
+
+@*EAAMDfPOxYZBwBAMZBAwyD75rXsDZBbkqcxhS2EJL2f7AMbyr5kVjIOMwfJWzqtakSa7KBlqDGZC3v7POr0UarZBqhDEITEujOupfIu9tkka33sGe5ZB2Nw3KbUx6pmABA04BU2MsKNvtiu0krbYXaGd9rBby7fnXZChGvQcHIowQZBgL01gMuGG1jRd8pPkoeqwZD*@
